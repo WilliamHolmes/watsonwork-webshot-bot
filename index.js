@@ -27,7 +27,6 @@ app.on('message-created', (message, annotation) => {
         console.log('filePath', filePath);
         webshot(url, filePath, err => {
             console.log('WEBSHOT response', url);
-            app.sendMessage(spaceId, data);
             if (_.isEmpty(err)) {
                 app.sendFile(spaceId,filePath);
                 del.sync(filePath, { force: true });
