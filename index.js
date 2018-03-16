@@ -1,5 +1,3 @@
-'use strict';
-
 const webshot = require('webshot');
 
 const del = require('delete');

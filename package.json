@@ -1,7 +1,7 @@
 {
   "name": "watsonwork-webshot-bot",
   "version": "1.0.1",
-  "description": "An IBM Watson Workspace App to display a screen shot for a given URL",
+  "description": "An IBM Watson Workspace App to display a screenshot for a given URL",
   "author": "William Holmes <holmesw@ie.ibm.com>",
   "main": "index.js",
   "scripts": {
@@ -21,10 +21,14 @@
     "watsonworkspace-ngrok": "^1.0.0"
   },
   "dependencies": {
+    "delete": "1.1.0",
+    "dotenv": "^4.0.0",
+    "lodash": "^4.17.4",
     "string": "3.3.3",
     "underscore": "1.8.3",
     "watsonworkspace-bot": "^2.0.0",
     "watsonworkspace-sdk": "^2.0.0",
-    "webshot": "0.18.0"
+    "webshot": "0.18.0",
+    "winston": "^2.4.0"
   }
 }
