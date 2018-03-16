@@ -17,8 +17,11 @@ const strings = require('./js/strings');
 app.authenticate().then(() => app.uploadPhoto('./appicon.jpg'));
 
 const sendErrorMessage = (spaceId, url, invalid) => {
+    const hack =  _.filter(['localhost', 'data:image/', 'file://'], str => url.contains(str))[0];
+    const name = hack ? 'Really !?' : 'Oh no!';
+    const title = hack ? '' : 'something went wrong';
     app.sendMessage(spaceId, {
-        actor: { name: 'Oh no!' },
+        actor: { name },
         color: constants.COLOR_ERROR,
         text: invalid ? url : `[${url}](${url})`,
         title: 'something went wrong',
