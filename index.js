@@ -20,7 +20,7 @@ const sendErrorMessage = (spaceId, url) => {
     app.sendMessage(spaceId, {
         actor: { name: 'Oh no!' },
         color: constants.COLOR_ERROR,
-        text: `${url}`,
+        text: `[$url](${url})`,
         title: 'something went wrong',
         type: 'generic',
         version: '1'
