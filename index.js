@@ -16,6 +16,17 @@ const strings = require('./js/strings');
 
 app.authenticate().then(() => app.uploadPhoto('./appicon.jpg'));
 
+const sendErrorMessage = (spaceId, url) => {
+    app.sendMessage(spaceId, {
+        actor: { name: 'Oh no!' },
+        color: constants.COLOR_ERROR,
+        text: `${url}`,
+        title: 'something went wrong',
+        type: 'generic',
+        version: '1'
+    });
+}
+
 
 app.on('message-created', (message, annotation) => {
     const { content = '', spaceId } = message;
@@ -34,26 +45,13 @@ app.on('message-created', (message, annotation) => {
                     app.sendFile(spaceId,filePath);
                     del.sync(filePath, { force: true });
                 } else {
-                    console.error('WEBSHOT ERROR', err);
-                    app.sendMessage(spaceId, {
-                        actor: { name: 'WebShot Error' },
-                        color: constants.COLOR_ERROR,
-                        text: `\n*Error*: ${err}`,
-                        title: url,
-                        type: 'generic',
-                        version: '1'
-                    });
+                    console.log('WEBSHOT ERROR', err);
+                    sendErrorMessage(spaceId, url);
                 }
             });
         } else {
-            app.sendMessage(spaceId, {
-                actor: { name: 'WebShot Error' },
-                color: constants.COLOR_ERROR,
-                text: `\n*Error*: URL is Invalid`,
-                title: url,
-                type: 'generic',
-                version: '1'
-            });
+            console.log('LINK ERROR', url);
+            sendErrorMessage(spaceId, url);
         }
     });
 });
