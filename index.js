@@ -23,7 +23,7 @@ app.on('message-created', (message, annotation) => {
         console.log('str', str);
         const url = strings.chompLeft(str.toLowerCase(), constants.regex.KEY);
         console.log('URL', url);
-        const filePath = `./${constants.TEMP_DIR}/webshot_${packageName}.png`;
+        const filePath = `./${constants.TEMP_DIR}/webshot_${_.now()}.png`;
         webshot(urlL, filePath, err => {
             app.sendMessage(spaceId, data);
             if (_.isEmpty(err)) {
