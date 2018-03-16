@@ -1,6 +1,7 @@
 const webshot = require('webshot');
 
 const del = require('delete');
+const linkifyjs = require('linkifyjs');
 const _ = require('underscore');
 
 const appFramework = require('watsonworkspace-bot');
@@ -23,25 +24,36 @@ app.on('message-created', (message, annotation) => {
         console.log('webshot match', str);
         const url = strings.chompLeft(str.toLowerCase(), constants.regex.KEY);
         console.log('URL', url);
-        const filePath = `./${constants.TEMP_DIR}/webshot_${_.now()}.png`;
-        console.log('filePath', filePath);
-        webshot(url, filePath, err => {
-            console.log('WEBSHOT response', url);
-            if (_.isEmpty(err)) {
-                app.sendFile(spaceId,filePath);
-                del.sync(filePath, { force: true });
-            } else {
-                console.error('WEBSHOT ERROR', err);
-                app.sendMessage(spaceId, Object.assign({
-                    type: 'generic',
-                    version: '1',
-                    color: constants.COLOR_ERROR
-                }, {
-                    actor: { name: 'WebShot Error' },
-                    title: url,
-                    text: `\n*Error*: ${err}`,
-                }));
-            }
-        });
+
+        if(linkifyjs.test(url)) {
+            const filePath = `./${constants.TEMP_DIR}/webshot_${_.now()}.png`;
+            console.log('filePath', filePath);
+            webshot(url, filePath, err => {
+                console.log('WEBSHOT response', url);
+                if (_.isEmpty(err)) {
+                    app.sendFile(spaceId,filePath);
+                    del.sync(filePath, { force: true });
+                } else {
+                    console.error('WEBSHOT ERROR', err);
+                    app.sendMessage(spaceId, {
+                        actor: { name: 'WebShot Error' },
+                        color: constants.COLOR_ERROR,
+                        text: `\n*Error*: ${err}`,
+                        title: url,
+                        type: 'generic',
+                        version: '1'
+                    });
+                }
+            });
+        } else {
+            app.sendMessage(spaceId, {
+                actor: { name: 'WebShot Error' },
+                color: constants.COLOR_ERROR,
+                text: `\n*Error*: URL is Invalid`,
+                title: url,
+                type: 'generic',
+                version: '1'
+            });
+        }
     });
 });
