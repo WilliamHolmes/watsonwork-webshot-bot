@@ -17,14 +17,15 @@ const strings = require('./js/strings');
 app.authenticate().then(() => app.uploadPhoto('./appicon.jpg'));
 
 const sendErrorMessage = (spaceId, url, invalid) => {
-    const hack =  _.filter(['://localhost', 'data:image/', 'file://', '://127.0.0.1'], str => url.contains(str))[0];
+    const hack =  _.filter(['://localhost', 'data:image/', 'file://', '://127.0.0.1'], str => url.includes(str))[0];
     const name = hack ? 'Really !?' : 'Oh no!';
     const title = hack ? '' : 'something went wrong';
+    const text = (invalid || hack) ? url : `[${url}](${url})`;
     app.sendMessage(spaceId, {
         actor: { name },
         color: constants.COLOR_ERROR,
-        text: (invalid || hack) ? url : `[${url}](${url})`,
-        title: 'something went wrong',
+        text,
+        title,
         type: 'generic',
         version: '1'
     });
