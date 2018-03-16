@@ -16,11 +16,11 @@ const strings = require('./js/strings');
 
 app.authenticate().then(() => app.uploadPhoto('./appicon.jpg'));
 
-const sendErrorMessage = (spaceId, url) => {
+const sendErrorMessage = (spaceId, url, invalid) => {
     app.sendMessage(spaceId, {
         actor: { name: 'Oh no!' },
         color: constants.COLOR_ERROR,
-        text: `[${url}](${url})`,
+        text: invalid ? url : `[${url}](${url})`,
         title: 'something went wrong',
         type: 'generic',
         version: '1'
@@ -51,7 +51,7 @@ app.on('message-created', (message, annotation) => {
             });
         } else {
             console.log('LINK ERROR', url);
-            sendErrorMessage(spaceId, url);
+            sendErrorMessage(spaceId, url, true);
         }
     });
 });
