@@ -1,13 +1,11 @@
 {
   "name": "watsonwork-webshot-bot",
   "version": "1.0.1",
-  "description": "An IBM Watson Workspace App to retrieve NPM package details",
+  "description": "An IBM Watson Workspace App to display a screen shot for a given URL",
   "author": "William Holmes <holmesw@ie.ibm.com>",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "jasmine",
-    "dev": "concurrently \"node ./node_modules/watsonworkspace-ngrok/index.js\" \"nodemon --inspect ./index.js\""
+    "start": "node index.js"
   },
   "keywords": [
     "watsonworkspace",
