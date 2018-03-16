@@ -13,7 +13,7 @@ const UI = require('watsonworkspace-sdk').UI;
 const constants = require('./js/constants');
 const strings = require('./js/strings');
 
-app.authenticate().then(() => app.uploadPhoto('./appicon.jpeg'));
+app.authenticate().then(() => app.uploadPhoto('./appicon.jpg'));
 
 
 app.on('message-created', (message, annotation) => {
@@ -29,6 +29,16 @@ app.on('message-created', (message, annotation) => {
             if (_.isEmpty(err)) {
                 app.sendFile(spaceId,filePath);
                 del.sync(filePath, { force: true });
+            } else {
+                app.sendMessage(spaceId, Object.assign({
+                    type: 'generic',
+                    version: '1',
+                    color: constants.COLOR_ERROR
+                }, {
+                    actor: { name: 'WebShot Error' },
+                    title: url,
+                    text: `\n*Error*: ${err}`,
+                }));
             }
         });
     });
