@@ -23,7 +23,7 @@ const sendErrorMessage = (spaceId, url, invalid) => {
     app.sendMessage(spaceId, {
         actor: { name },
         color: constants.COLOR_ERROR,
-        text: invalid ? url : `[${url}](${url})`,
+        text: (invalid || hack) ? url : `[${url}](${url})`,
         title: 'something went wrong',
         type: 'generic',
         version: '1'
