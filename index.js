@@ -16,20 +16,12 @@ const strings = require('./js/strings');
 
 app.authenticate().then(() => app.uploadPhoto('./appicon.jpg'));
 
-const isPotenialHack = url => _.filter(constants.HACKS, str => url.includes(str));
-
 const sendErrorMessage = (spaceId, url, invalid) => {
-    const hack =  isPotenialHack(url);
-
-    const name = hack ? 'Really !?' : 'Oh no!';
-    const title = hack ? '' : 'something went wrong';
-    const text = (invalid || hack) ? url : `[${url}](${url})`;
-
     app.sendMessage(spaceId, {
-        actor: { name },
+        actor: { name: 'Oh no!' },
         color: constants.COLOR_ERROR,
-        text,
-        title,
+        text: invalid ? url : `[${url}](${url})`;,
+        title: 'something went wrong',
         type: 'generic',
         version: '1'
     });
