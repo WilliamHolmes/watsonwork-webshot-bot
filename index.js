@@ -29,7 +29,7 @@ app.on('message-created', (message, annotation) => {
             const filePath = `./${constants.TEMP_DIR}/webshot_${_.now()}.png`;
             console.log('filePath', filePath);
             webshot(url, filePath, err => {
-                console.log('WEBSHOT response', url);
+                console.log('WEBSHOT response', url, err);
                 if (_.isEmpty(err)) {
                     app.sendFile(spaceId,filePath);
                     del.sync(filePath, { force: true });
