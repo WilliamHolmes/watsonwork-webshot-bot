@@ -27,6 +27,6 @@
     "underscore": "1.8.3",
     "watsonworkspace-bot": "^2.0.0",
     "watsonworkspace-sdk": "^2.0.0",
-    "webshot": "0.18.0",
+    "webshot": "0.18.0"
   }
 }
